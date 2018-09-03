@@ -1,4 +1,4 @@
-
+from index import *
 
 
 def print_menu():
