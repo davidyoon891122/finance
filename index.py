@@ -24,14 +24,15 @@ def parse_index_tags():
 
 def parse_time():
 	bs = get_soup(main_url)
-	time_tags = bs.select('div.ly_realtime span.time')
-	return time_tags
+	date_tags = bs.find('div', {'class':'ly_realtime'})
+	time = bs.find('span', {'id':'time'})
+	return time
 
 
 def index_information():
 	index_tags = parse_index_tags()
 	time_tags = parse_time()
-	datetime = time_tags
+	datetime = time_tags.text
 	kospi = index_tags[0].text
 	kosdaq = index_tags[1].text
 	kospi200 = index_tags[2].text
