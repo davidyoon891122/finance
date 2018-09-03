@@ -1,5 +1,8 @@
 from index import *
 from stock import *
+from rate import *
+
+
 
 def print_menu():
 	print('1. show Index information')
@@ -18,7 +21,7 @@ def run():
 		elif menu == 2:
 			print_stock()
 		elif menu == 3:
-			exchange_rate()
+			print_rate()
 		elif menu == 4:
 			import sys
 			sys.exit()
