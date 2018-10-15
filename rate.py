@@ -3,7 +3,7 @@ from selenium import webdriver
 options = webdriver.ChromeOptions() 
 options.add_argument('headless')
 options.add_argument('disable_gpu')
-driver = webdriver.Chrome('/home/david/python/chromedriver', chrome_options=options)
+driver = webdriver.Chrome('/chromedriver', chrome_options=options)
 
 main_url = 'http://finance.naver.com'
 
