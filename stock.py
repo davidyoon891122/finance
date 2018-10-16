@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import pandas as pd
 
 
@@ -17,16 +18,19 @@ def main():
 	code_df = code_df[['회사명', '종목코드']]
 	code_df = code_df.rename(columns={'회사명':'name', '종목코드':'code'})
 	code_df.head()
-
-	url = get_url(item_name, code_df)
-
-	df = pd.DataFrame()
-	for page in range(1,5):
-		pg_url = '{url}&page={page}'.format(url=url, page=page)
-		df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True)
-	df = df.dropna()
-	df.head()
-	print(df.head())
+	
+	try:
+		url = get_url(item_name, code_df)
+		df = pd.DataFrame()
+		for page in range(1,5):
+			pg_url = '{url}&page={page}'.format(url=url, page=page)
+			df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True)
+		df = df.dropna()
+		df.head()
+		print(df.head())
+	except Exception as e:
+		print(e)
+		print('There is not {}\n'.format(item_name))
 
 
 def print_stock():
