@@ -15,17 +15,26 @@ def parse_stock(s_file):
 
 
 
-def get_url(item_name, code_df):
-	code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+def get_url(item_name, code):
 	url = 'http://finance.naver.com/item/sise_day.nhn?code={code}'.format(code=code)
 
-	print('요청 ULR = {]'.format(url))
-	return url
+	print('요청 ULR = {}'.format(url))
+	
+	try:
+		df = pd.DataFrame()
+		for page in range(1,5):
+			pg_url = '{url}&page={page}'.format(url=url, page=page)
+			df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True)
+		df = df.dropna()
+		df.head()
+		print(df.head())
+	except Exception as e:
+		print(e)
+		print('There is not {}\n'.format(item_name))
 
 
 
-def draw_graph(item_name, code_df):
-	code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+def draw_graph(item_name, code):
 	item = web.DataReader(code+'.KS','yahoo')
 	
 	plt.plot(item.index, item['Adj Close'], label=item_name)
@@ -33,10 +42,17 @@ def draw_graph(item_name, code_df):
 
 	plt.show()
 
+def code_query(item_name, code_df):
+	code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+	return code
 
-if __name__ =='__main__':
+
+def run():
 	code_data = parse_stock(s_file)
 	stock = input('조회하고 싶은 종목을 써주세요. : ')
-	draw_graph(stock, code_data)
-
+	
+	code = code_query(stock, code_data)
+	
+	get_url(stock, code)
+	draw_graph(stock, code)
 	
