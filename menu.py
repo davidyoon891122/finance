@@ -18,14 +18,14 @@ def run():
 	while True:
 		try:
 			print_menu()
-			menu = int(input('which information do you want to know'))
-			if menu == 1:
+			menu = input('Which information do you want to know : ')
+			if menu == '1':
 				print_index()
-			elif menu == 2:
+			elif menu == '2':
 				stockgraph.run()
-			elif menu == 3:
+			elif menu == '3':
 				print_rate()
-			elif menu == 4:
+			elif menu == '4':
 				import sys
 				sys.exit()
 			else:
