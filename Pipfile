@@ -10,6 +10,8 @@ pandas = "*"
 lxml = "*"
 pandas-datareader = "*"
 matplotlib = "*"
+"html5lib" = "*"
+requests = "*"
 
 [dev-packages]
 

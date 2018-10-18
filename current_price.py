@@ -77,7 +77,7 @@ with open(fname, 'a') as f:
 		  	for ticker in tickers:
 		  		data = combine(ticker)
 		  		print(data)
-		  		writer.writerow(data)
+		  		write.writerow(data)
 		  	time.sleep(freq)
 
 
