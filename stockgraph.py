@@ -26,7 +26,7 @@ def get_url(item_name, code):
 	
 	try:
 		df = pd.DataFrame()
-		for page in range(1,20):
+		for page in range(1,50):
 			pg_url = '{url}&page={page}'.format(url=url, page=page)
 			df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True)
 		df = df.dropna()
@@ -39,16 +39,23 @@ def get_url(item_name, code):
 
 
 def draw_graph(item_name, code):
-	item = web.DataReader(code+'.KS','yahoo')
-	
-	plt.plot(item.index, item['Adj Close'], label=item_name)
-	plt.legend(loc=1)
+	try:
+		item = web.DataReader(code+'.KS','yahoo')
+		
+		plt.plot(item.index, item['Adj Close'], label=item_name)
+		plt.legend(loc=1)
 
-	plt.show()
+		plt.show()
+	except Exception as e:
+		print(e)
+		print('Yahoo에서 존재하지 않는 데이터 입니다.')
 
 def code_query(item_name, code_df):
-	code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
-	return code
+	try:
+		code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+		return code
+	except Exception as e:
+		print('존재하지 않는 종목입니다.\n')
 
 def financial_statement(item_name, code):
 	pass
@@ -60,7 +67,8 @@ def run():
 	stock = input('조회하고 싶은 종목을 써주세요. : ')
 	
 	code = code_query(stock, code_data)
-	print(code)
-	get_url(stock, code)
-	draw_graph(stock, code)
+	if code:
+		print(code)
+		get_url(stock, code)
+		draw_graph(stock, code)
 	
