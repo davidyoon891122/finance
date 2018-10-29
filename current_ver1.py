@@ -38,14 +38,13 @@ def get_current_price(code):
 if __name__ == '__main__':
 	while True:
 		t = time.localtime()
-		if t.tm_hour <= 16:
-				try:
-					rt = get_current_price('034730')
-					time.sleep(5)
-					print(rt)
-					if t.tm_hour == 16:
-						print('장 마감\n')
-						break
-				except KeyboardInterrupt:
-					print('프로그램 정지')
-					break
+		try:
+			rt = get_current_price('286940')
+			time.sleep(5)
+			print(rt)
+			if t.tm_hour >= 15:
+				print('장 마감\n')
+				break
+		except KeyboardInterrupt:
+			print('프로그램 정지')
+			break
