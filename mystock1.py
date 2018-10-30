@@ -35,28 +35,28 @@ def get_current_price(code):
 	rs = requests.get(url)
 	soup = BeautifulSoup(rs.text, 'lxml')
 	
-	price_tag = soup.find('strong', {'class':'tah p11'})
-	if price_tag != None:
-		price = price_tag.text
+	today = soup.find('div', {'class':'today'})
+
+	price_tag = today.find('p', {'class':'no_today'})
+	price = price_tag.find('span', {'class':'blind'})
+	if price != None:
+		price = price.text
 	else:
 		price = None
 
-	rate_parent = soup.find('strong', {'id':'_rate'})
-	rate_tag = rate_parent.find('span', {'class':'tah p11 nv01'})
-	if rate_tag != None:
-		rate = rate_tag.text
-		m_rate = rate.replace('\t', '').replace('\n','')
+	rate_tag = today.find('p', {'class':'no_exday'})
+	rate = rate_tag.find_all('span', {'class':'blind'})[1]
+	if rate != None:
+		rate = rate.text
 	else:
 		rate = None
-		m_rate = None
-
 	time_tag = soup.find('span', {'id':'time'})
-
 	if time_tag != None:
 		time = time_tag.text
-		m_time = time.replace('\n','')
+		time = time.replace('\n', '')
 
-	return [m_time, price, m_rate]
+
+	return [time, price, rate]
 
 
 
@@ -94,9 +94,5 @@ if __name__=='__main__':
 		thread = threading.Thread(target=run)
 		print(thread)
 		thread.start()
-
-
-
-	
 
 
