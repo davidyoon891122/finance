@@ -61,12 +61,10 @@ def get_current_price(code):
 
 
 
-def run():
-	lock.acquire()
+def run(name):
 	code_data = parse_stock(s_file)
-	stock = input('조회하고 싶은 종목을 써주세요.:')
+	stock = name
 	code = code_query(stock, code_data)
-	lock.release()
 	if code:
 		while True:
 			t = time.localtime()
@@ -83,15 +81,23 @@ def run():
 				
 		
 		
+def select_stock():
+	number = input("실시간으로 확인 하실 종목의 개수를 정해주세요 :")
+	number = int(number)
+	name_list = []
+	for i in range(number):
+		name = input("{} 번째 종목 : ".format(i+1))
+		name_list.append(name)
+
+	return name_list
 
 
 
+def run_mystock():
+	name_list = select_stock()
 
-if __name__=='__main__':
-	num_of_thread = input('확인하고 싶은 종목 수를 써주세요')
-	lock = threading.Lock()	
-	for i in range(int(num_of_thread)):
-		thread = threading.Thread(target=run)
+	for i in range(len(name_list)):
+		thread = threading.Thread(target=run, args=(name_list[i],))
 		print(thread)
 		thread.start()
 

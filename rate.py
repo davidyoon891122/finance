@@ -37,5 +37,28 @@ def print_rate():
 	print('CN rate is : {}'.format(CN))
 
 
+def calculate_rate():
+	US, JP, EU, CN = rate_information()
+	amount_kor = input("How much money do you want to change : ")
+	
+	amount = int(amount_kor.replace(",", ""))
+	US = float(US.replace(",", ""))
+	JP = float(JP.replace(",", ""))
+	EU = float(EU.replace(",", ""))
+	CN = float(CN.replace(",", ""))
+	US_result = amount / US
+	JP_result = amount / (JP * 0.01)	
+	EU_result = amount / EU
+	CN_result = amount / CN
+
+	print("{} WON : {:0.2f} USD".format(amount_kor, US_result))
+	print("{} WON : {:0.2f} JPY".format(amount_kor, JP_result))
+	print("{} WON : {:0.2f} EUR".format(amount_kor, EU_result))
+	print("{} WON : {:0.2f} CNY".format(amount_kor, CN_result))
+
+
+
+
+
 
 

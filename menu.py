@@ -2,14 +2,16 @@ from index import *
 from stock import *
 from rate import *
 import stockgraph
-
+from mystock1 import *
 
 
 def print_menu():
 	print('1. show Index information')
 	print('2. show Stock Price')
 	print('3. show Exchange Rate')
-	print('4. exit')
+	print('4. Rate calculator')
+	print('5. Real-Time current price check')
+	print('6. exit')
 	
 
 
@@ -26,6 +28,10 @@ def run():
 			elif menu == '3':
 				print_rate()
 			elif menu == '4':
+				calculate_rate()
+			elif menu == '5':
+				run_mystock()
+			elif menu == '6':
 				import sys
 				sys.exit()
 			else:
