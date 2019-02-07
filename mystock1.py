@@ -98,6 +98,7 @@ def run_mystock():
 
 	for i in range(len(name_list)):
 		thread = threading.Thread(target=run, args=(name_list[i],))
+		thread.daemon = True
 		print(thread)
 		thread.start()
 
