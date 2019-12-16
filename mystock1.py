@@ -15,13 +15,13 @@ def parse_stock(s_file):
 	code_df = code_df[['회사명', '종목코드']]
 	code_df = code_df.rename(columns={'회사명':'name', '종목코드':'code'})
 	
-	return code_df
+	return code_df.replace(' ', '')
 
 
 
 def code_query(item_name, code_df):
 	try:
-		code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+		code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False).replace(' ', '')
 		return code
 	except Exception as e:
 		print(e)
