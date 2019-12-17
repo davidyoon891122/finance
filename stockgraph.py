@@ -4,18 +4,10 @@ import pandas as pd
 import pandas_datareader.data as web
 import matplotlib.pyplot as plt
 from matplotlib import font_manager, rc
+from tools import *
 
-font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
-rc('font', family=font_name)
-
-s_file = 'http://kind.krx.co.kr/corpgeneral/corpList.do?method=download&searchType=13'
-
-def parse_stock(s_file):
-	code_df = pd.read_html(s_file, header=0)[0]
-	code_df.종목코드 = code_df.종목코드.map('{:06d}'.format)
-	code_df = code_df[['회사명', '종목코드']]
-	code_df = code_df.rename(columns={'회사명':'name', '종목코드':'code'})
-	return code_df.replace(' ', '')
+#font_name = font_manager.FontProperties(fname='c:/Windows/Fonts/malgun.ttf').get_name()
+#rc('font', family=font_name)
 
 
 
@@ -28,6 +20,7 @@ def get_url(item_name, code):
 		df = pd.DataFrame()
 		for page in range(1,50):
 			pg_url = '{url}&page={page}'.format(url=url, page=page)
+			print(pg_url)
 			df = df.append(pd.read_html(pg_url, header=0)[0], ignore_index=True)
 		df = df.dropna()
 		df.head()
@@ -52,7 +45,7 @@ def draw_graph(item_name, code):
 
 def code_query(item_name, code_df):
 	try:
-		code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False)
+		code = code_df.query("name=='{}'".format(item_name))['code'].to_string(index=False).replace(' ', '')
 		return code
 	except Exception as e:
 		print('존재하지 않는 종목입니다.\n')
@@ -63,7 +56,7 @@ def financial_statement(item_name, code):
 
 
 def run():
-	code_data = parse_stock(s_file)
+	code_data = parse_stock()
 	stock = input('조회하고 싶은 종목을 써주세요. : ')
 	
 	code = code_query(stock, code_data)

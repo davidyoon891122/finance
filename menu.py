@@ -1,8 +1,8 @@
-from index import *
-from stock import *
-from rate import *
+import index
+import rate 
 import stockgraph
-from mystock1 import *
+import realtimePrice
+import config 
 
 
 def print_menu():
@@ -16,21 +16,24 @@ def print_menu():
 
 
 
-def run():
+def run(driver_path=None):
 	while True:
 		try:
 			print_menu()
 			menu = input('Which information do you want to know : ')
 			if menu == '1':
-				print_index()
+				i = index.Index(driver_path)
+				i.print_index()
 			elif menu == '2':
 				stockgraph.run()
 			elif menu == '3':
-				print_rate()
+				r = rate.Rate(driver_path)
+				r.print_rate()
 			elif menu == '4':
-				calculate_rate()
+				r = rate.Rate(driver_path)
+				r.calculate_rate()
 			elif menu == '5':
-				run_mystock()
+				realtimePrice.run_mystock()
 			elif menu == '6':
 				import sys
 				sys.exit()
@@ -42,4 +45,8 @@ def run():
 
 
 if __name__ == '__main__':
-	run()
+
+	conf = config.Config('./fin.conf')
+	print(conf.fallback)
+	driver = conf.fallback['driver']['path']
+	run(driver)
