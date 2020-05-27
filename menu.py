@@ -34,6 +34,7 @@ def run(driver_path=None):
 				r.calculate_rate()
 			elif menu == '5':
 				realtimePrice.run_mystock()
+				break
 			elif menu == '6':
 				import sys
 				sys.exit()
@@ -47,6 +48,5 @@ def run(driver_path=None):
 if __name__ == '__main__':
 
 	conf = config.Config('./fin.conf')
-	print(conf.fallback)
 	driver = conf.fallback['driver']['path']
 	run(driver)

@@ -61,9 +61,14 @@ def run(name):
 				result = get_current_price(code)
 				print('종목: {}'.format(stock),  result)
 				time.sleep(5)
-				if t.tm_hour >= 15:
+				if t.tm_hour >= 16:
 					print('장이 마감되어 프로그램을 종류합니다.\n')
-					break
+
+					end = input("프로그램 정지 (yes/no) : ")
+					if end.upper() == "YES":
+						break
+					elif end.upper() == "NO":
+						continue
 			except KeyboardInterrupt:
 				print('프로그램 정지 신호 포착! 정지합니다.\n')
 				break
@@ -87,7 +92,6 @@ def run_mystock():
 
 	for i in range(len(name_list)):
 		thread = threading.Thread(target=run, args=(name_list[i],))
-		thread.daemon = True
 		print(thread)
 		thread.start()
 
